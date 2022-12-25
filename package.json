@@ -1,6 +1,6 @@
 {
   "name": "hotkey-stack",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Hotkey Event Listener Stacks",
   "main": "dist/index.js",
   "repository": "https://github.com/cameronaziz/hotkey-stack",
