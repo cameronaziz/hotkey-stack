@@ -1,0 +1,45 @@
+.item {
+  background-color: #61dafb;
+  padding: 4px;
+  height: min-content;
+  width: calc(10vw - 12px);
+}
+
+.item-button {
+  font-size: calc(10px + 0.5vmin);
+  display: block;
+  width: 100%;
+}
+
+.item-button-container {
+  margin-top: 16px;
+}
+
+.item-count {
+  font-size: 16px;
+}
+
+.item-char {
+  font-size: calc(10px + 3vmin);
+}
+
+.item-render-id {
+  font-size: 12px;
+}
+
+.items {
+  flex-wrap: wrap;
+  display: flex;
+  gap: 4px;
+  padding-bottom: 10vh;
+  height: 30vh;
+  width: 50vw;
+}
+
+.remove {
+  font-size: calc(10px + 1vmin)
+}
+
+.item-position {
+  font-size: 14px;
+}

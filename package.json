@@ -1,0 +1,25 @@
+{
+  "name": "hotkey-stack",
+  "version": "0.1.0",
+  "description": "Hotkey Event Listener Stacks",
+  "main": "dist/index.js",
+  "repository": "https://github.com/cameronaziz/hotkey-stack",
+  "author": {
+    "name": "Cameron Aziz",
+    "email": "cameronaziz@me.com"
+  },
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "demo": "yarn --cwd demo start"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "typescript": "^4.9.4"
+  },
+  "keywords": [
+    "event listener",
+    "hotkey"
+  ]
+}

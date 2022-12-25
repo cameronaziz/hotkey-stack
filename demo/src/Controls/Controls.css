@@ -1,0 +1,40 @@
+.controls-add {
+  width: 80%;
+  margin: 8px auto 0;
+  display: block;
+}
+
+.controls-settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 4px;
+}
+
+.control-value {
+  position: relative;
+  display: flex;
+  white-space: nowrap;
+}
+
+.control-title {
+  text-align: right;
+  margin-right: 2vw;
+}
+
+.control-default-count-reset {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  right: 0px;
+}
+
+.control-default-count-input::-webkit-inner-spin-button  {
+  display: none;
+}
+
+.controls-container {
+  position: sticky;
+  top: 0;
+  padding: 10vh 0 2vh 0;
+  background-color: #282c34;
+}
