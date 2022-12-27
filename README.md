@@ -1,40 +1,73 @@
 # Hotkey Stack
-A package to create a stack of hotkeys.
+A zero dependency package to create a stack of listeners for a hotkey.
 This allows multiple registrations of the same hotkey.
-By default, only the last registration will call it's listener when needed.
+By default, only the last registered listener will be called when it's hotkey is pressed.
 
 ## Setup
+### NPM
+```bash
+npm install hotkey-stack
+```
+### Yarn
 ```bash
 yarn add hotkey-stack
 ```
 ## Usage
-No initialization is required. The package stores its own state. 
-> **Note for React Users:**
-> There is no provider as `hotkey-stack` is a singleton, does not internally manipulate UI, and stores is own state.
-> *That was easy*
+### Basic
 ```typescript
-import { hs } from 'hotkey-stack'
+import hs from 'hotkey-stack'
+
+const callback = () => {
+  console.log('Callback Called')
+}
 
 hs.add('a', callback)
-
-// `callback` will execute when the `A` key is pressed.
 ```
+#### Output when `A` key is pressed
+```bash
+Callback Called
+```
+### Multiple Listeners
 ```typescript
-import { hs } from 'hotkey-stack'
+import hs from 'hotkey-stack'
+
+const oneCallback = () => {
+  console.log('One Callback Called')
+}
+
+const twoCallback = () => {
+  console.log('Two Callback Called')
+}
 
 hs.add('a', oneCallback)
 hs.add('a', twoCallback)
-
-// `twoCallback` will execute when the `A` key is pressed.
 ```
+#### Output when `A` key is pressed
+```bash
+Two Callback Called
+```
+
+### Removing Listeners
 ```typescript
-import { hs } from 'hotkey-stack'
+import hs from 'hotkey-stack'
+
+
+const oneCallback = () => {
+  console.log('One Callback Called')
+}
+
+const twoCallback = () => {
+  console.log('Two Callback Called')
+}
 
 hs.add('a', oneCallback)
 hs.add('a', twoCallback)
 hs.pull(twoCallback)
 
-// `oneCallback` will execute when the `A` key is pressed.
+```
+#### Output when `A` key is pressed
+```bash
+One Callback Called
 ```
 
 ## API
@@ -48,69 +81,73 @@ hs.pull(twoCallback)
 | `start` | Starts listening to all hotkeys. *This is automatic during instantiation and does not need to be called.*  |  |
 
 ## Advanced Usage
+### Disabling Listener
+The listener stack 
+Listeners can be temporaily 
 ```typescript
-import { hs } from 'hotkey-stack'
+import hs from 'hotkey-stack'
+
+const oneCallback = () => {
+  console.log('One Callback Called')
+}
+
+const twoCallback = () => {
+  console.log('Two Callback Called')
+}
 
 hs.add('a', oneCallback)
 hs.add('a', twoCallback)
 hs.skip('a', twoCallback)
-
-// `oneCallback` will execute when the `A` key is pressed.
 ```
+#### Output when `A` key is pressed
+```bash
+One Callback Called
+```
+
+### Disabling Listener and Adding Back
+This example uses `skip`, and then `add`.
+This **does not** require the listener to be the same reference.
+The symbol passed to `add` will be used as the reference to retain the position.
 ```typescript
-import { hs } from 'hotkey-stack'
+import hs from 'hotkey-stack'
 
 const oneSymbol = Symbol()
+
+const oneCallback = () => {
+  console.log('One Callback Called')
+}
+
+const twoCallback = () => {
+  console.log('Two Callback Called')
+}
 
 hs.add('a', oneCallback, oneSymbol)
 hs.add('a', twoCallback)
 hs.skip('a', oneCallback)
 hs.add('a', oneCallback, oneSymbol)
-
-// `twoCallback` will execute when the `A` key is pressed.
 ```
-```typescript
-import { hs } from 'hotkey-stack'
+#### Output when `A` key is pressed
+```bash
+Two Callback Called
+```
 
-const oneSymbol = Symbol()
+### Prioritizing Listener
+```typescript
+import hs from 'hotkey-stack'
+
+const oneCallback = () => {
+  console.log('One Callback Called')
+}
+
+const twoCallback = () => {
+  console.log('Two Callback Called')
+}
 
 hs.add('a', oneCallback)
 hs.add('a', twoCallback)
 hs.cut('a', oneCallback)
-hs.add('a', oneCallback)
-
-// `oneCallback` will execute when the `A` key is pressed.
 ```
-```typescript
-import { hs } from 'hotkey-stack'
-
-const oneSymbol = Symbol()
-
-hs.add('a', oneCallback, oneSymbol)
-hs.add('a', twoCallback)
-hs.pull('a', oneCallback)
-hs.add('a', oneCallback, oneSymbol)
-
-// `oneCallback` will execute when the `A` key is pressed.
-// Providing `oneSymbol` has no effect.
-```
-
-## React Example
-```typescript
-  const symbolRef = useRef(Symbol())
-
-  useEffect(() => {
-    hotkeyStack.add('a', methodThatCanChange, symbolRef)
- 
-    return () => {
-      // On changes to the listener, `useEffect` will execute return statement.
-      // This prevents listener from cutting the line, use `skip`.
-      hotkeyStack.skip(methodThatCanChange)
-    }
-  }, [methodThatCanChange])
- 
-  useEffect(() => {
-    // On component unmount, we want to ensure cleanup.
-    hotkeyStack.pull(methodThatCanChange)
-  }, [])
+#### Output when `A` key is pressed
+```bash
+One Callback Called
 ```

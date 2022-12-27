@@ -1,11 +1,11 @@
 class WindowListener {
     started = false;
-    registrations;
+    _registrations;
     static instance;
     constructor(registrations) {
         if (!WindowListener.instance) {
             WindowListener.instance = this;
-            this.registrations = registrations;
+            this._registrations = registrations;
             this.start();
         }
         return WindowListener.instance;
@@ -28,6 +28,12 @@ class WindowListener {
             window.removeEventListener('keypress', this.keypress);
         }
     };
+    get registrations() {
+        if (!this._registrations) {
+            throw new Error('Registrations were not passed to Window Listener');
+        }
+        return this._registrations;
+    }
 }
 export default WindowListener;
 //# sourceMappingURL=WindowListener.js.map

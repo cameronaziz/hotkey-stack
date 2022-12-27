@@ -1,6 +1,6 @@
+import type { HotkeyConfig, Listener } from '../typings';
 import Hotkey from './Hotkey';
 import StackItem from './StackItem';
-import type { HotkeyConfig, Listener } from './types';
 import getKey from './utils/getKey';
 
 class Registrations {

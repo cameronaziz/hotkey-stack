@@ -27,13 +27,17 @@ class Hotkey {
     };
     pull = (listener, hotkey) => {
         const stackItem = this.findStackItem(listener);
-        if (isStackItem(stackItem)) {
-            this.stackItemMap.delete(listener);
-            this.items = this.items.filter((item) => item !== stackItem);
+        if (!isStackItem(stackItem)) {
+            return;
         }
+        this.stackItemMap.delete(listener);
+        this.items = this.items.filter((item) => item !== stackItem);
     };
     skip = (listener, hotkey) => {
         const stackItem = this.findStackItem(listener);
+        if (!isStackItem(stackItem)) {
+            return;
+        }
         if (typeof stackItem.symbol !== 'symbol') {
             this.pull(listener);
             return;

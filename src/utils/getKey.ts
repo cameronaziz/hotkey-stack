@@ -1,4 +1,4 @@
-import { HotkeyConfig } from '../types'
+import type { HotkeyConfig } from '../../typings'
 
 const getKey = (key: HotkeyConfig): HotkeyConfig => {
   switch (key) {

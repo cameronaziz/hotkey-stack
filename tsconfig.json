@@ -9,8 +9,5 @@
     "outDir": "dist",
     "strictPropertyInitialization": false
   },
-  "include": [
-    "src/**/*",
-    "index.ts"
-],
+  "include": ["src/**/*", "index.ts", "typings.d.ts"]
 }

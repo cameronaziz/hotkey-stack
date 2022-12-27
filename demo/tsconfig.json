@@ -21,8 +21,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "../hotkey-queue/index.js",
-    "../hotkey-queue/src"
+    "./index.js",
+    "./react.js",
+    "./src"
   ]
 }

@@ -1,4 +1,4 @@
-import { HotkeyConfig, Listener } from './types'
+import type { HotkeyConfig, Listener } from '../typings'
 
 class StackItem {
   public listener: Listener

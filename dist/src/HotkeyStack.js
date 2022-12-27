@@ -4,11 +4,11 @@ class HotkeyStack {
     constructor() {
         if (!HotkeyStack.instance) {
             HotkeyStack.instance = this;
-            this.windowListener = new WindowListener(this.registrations);
+            this._windowListener = new WindowListener(this.registrations);
         }
         return HotkeyStack.instance;
     }
-    windowListener;
+    _windowListener;
     static instance;
     registrations = new Registrations();
     get add() {
@@ -28,6 +28,12 @@ class HotkeyStack {
     }
     get start() {
         return this.windowListener.start;
+    }
+    get windowListener() {
+        if (typeof this._windowListener === 'undefined') {
+            this._windowListener = new WindowListener(this.registrations);
+        }
+        return this._windowListener;
     }
 }
 const instance = new HotkeyStack();

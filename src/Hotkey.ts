@@ -1,6 +1,6 @@
+import type { HotkeyConfig, Listener } from '../typings';
 import StackItem from './StackItem';
 import { isListener, isStackItem } from './typeguards';
-import type { HotkeyConfig, Listener } from './types';
 
 class Hotkey {
   /**

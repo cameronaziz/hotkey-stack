@@ -1,4 +1,4 @@
-import { hs } from 'hotkey-stack';
+import hs from 'hotkey-stack';
 import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 import createKey from '../utils/createKey';
 import './Items.css';

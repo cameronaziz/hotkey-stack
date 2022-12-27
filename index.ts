@@ -1,1 +1,1 @@
-export { default as hs } from './src/HotkeyStack';
+export { default } from './src/HotkeyStack';

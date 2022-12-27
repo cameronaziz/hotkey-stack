@@ -1,5 +1,5 @@
+import type { Listener } from '../typings'
 import StackItem from './StackItem'
-import { Listener } from './types'
 
 export const isListener = (unknown?: Listener): unknown is Listener =>
   typeof unknown !== 'undefined'
