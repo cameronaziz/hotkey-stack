@@ -1,0 +1,54 @@
+name: Bump Version
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  release-npm:
+    name: Modify package.json 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Codebase
+      uses: actions/checkout@v2
+    - name: Get Package Version
+      id: package_version
+      run: |
+        PACKAGE_VERSION=$(cat package.json \
+          | grep version \
+          | head -1 \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[",]//g' | xargs)
+        echo "package_version=${PACKAGE_VERSION}" >> $GITHUB_ENV
+    - name: Extract Branch Name
+      id: extract_branch
+      shell: bash
+      run: |
+        echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+    - name: Commit Type
+      id: commit_type
+      run: |
+        branch=${{ env.branch_name }}
+        echo "commit_type=${branch%%/*}" >> $GITHUB_ENV
+    - name: Bump Version
+      if: ${{ env.branch_name == "major" || env.branch_name == "minor" || env.branch_name == "patch" }}
+      run: |
+        IFS='.'
+        function join { local IFS="$1"; shift; echo "$*"; }
+        read -a version <<< "${{ env.package_version }}"
+        case "${{ env.commit_type }}" in
+          "major") version[0]=2
+          ;;
+          "minor") version[1]=2
+          ;;
+          "patch") version[2]=2
+          ;;
+        esac
+        new_version=$(join . ${version[@]})
+        echo $new_version
+        sed  -i '/version/s/[^:]*$/'" \"${new_version}\",/" package.json
+        echo "new_version=${new_version}" >> $GITHUB_ENV
+    - name: Commit Bump
+      uses: stefanzweifel/git-auto-commit-action@v4
+    if: ${{ env.branch_name == "major" || env.branch_name == "minor" || env.branch_name == "patch" }}
+      with:
+        commit_message: Bumping to version ${{ env.new_version }}

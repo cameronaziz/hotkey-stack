@@ -1,4 +1,5 @@
 # Hotkey Stack
+<img style="max-width: 400px; margin: 0 auto; display: block;" src="assets/images/stacks.png" />
 A zero dependency package to create a stack of listeners for a hotkey.
 This allows multiple registrations of the same hotkey.
 By default, only the last registered listener will be called when it's hotkey is pressed.
