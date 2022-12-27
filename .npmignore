@@ -1,4 +1,5 @@
 demo
-src
+./src
 tsconfig.json
-resources
+assets
+.github
