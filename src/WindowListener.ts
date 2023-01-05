@@ -16,7 +16,7 @@ class WindowListener {
     return WindowListener.instance;
   }
 
-  private keypress = (event: KeyboardEvent) => {
+  private keydown = (event: KeyboardEvent) => {
     const listener = this.registrations.findListener(event.key)
 
     if (listener) {
@@ -28,14 +28,14 @@ class WindowListener {
   public start = () => {
     if (!this.started) {
       this.started = true
-      window.addEventListener('keypress', this.keypress)
+      window.addEventListener('keydown', this.keydown)
     }
   }
 
   public pause = () => {
     if (this.started) {
       this.started = false
-      window.removeEventListener('keypress', this.keypress)
+      window.removeEventListener('keydown', this.keydown)
     }
   }
 
