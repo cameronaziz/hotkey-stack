@@ -10,7 +10,7 @@ class WindowListener {
         }
         return WindowListener.instance;
     }
-    keypress = (event) => {
+    keydown = (event) => {
         const listener = this.registrations.findListener(event.key);
         if (listener) {
             listener(event);
@@ -19,13 +19,13 @@ class WindowListener {
     start = () => {
         if (!this.started) {
             this.started = true;
-            window.addEventListener('keypress', this.keypress);
+            window.addEventListener('keydown', this.keydown);
         }
     };
     pause = () => {
         if (this.started) {
             this.started = false;
-            window.removeEventListener('keypress', this.keypress);
+            window.removeEventListener('keydown', this.keydown);
         }
     };
     get registrations() {
