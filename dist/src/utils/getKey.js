@@ -20,13 +20,11 @@ const parseKey = (key) => {
     }
 };
 const buildKeyString = (key) => `
-{
 key: ${parseKey(key.key)},\
 isCtrlRequired: ${key.isCtrlRequired},\
 isMetaRequired: ${key.isMetaRequired},\
 isShiftRequired: ${key.isShiftRequired},\
 isAltRequired: ${key.isAltRequired},\
-}
 `;
 const getKey = (key) => {
     if (isComboHotkey(key)) {
