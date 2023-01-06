@@ -1,51 +1,49 @@
-import Registrations from './Registrations';
+import Registrations from "./Registrations";
 
 class WindowListener {
-  private started: boolean = false
-  private _registrations?: Registrations
-  private static instance: WindowListener
-
+  private started: boolean = false;
+  private _registrations?: Registrations;
+  private static instance: WindowListener;
 
   constructor(registrations: Registrations) {
-    if(!WindowListener.instance) {
+    if (!WindowListener.instance) {
       WindowListener.instance = this;
-      this._registrations = registrations
-      this.start()
+      this._registrations = registrations;
+      this.start();
     }
- 
+
     return WindowListener.instance;
   }
 
   private keydown = (event: KeyboardEvent) => {
-    const listener = this.registrations.findListener(event.key)
+    const listener = this.registrations.findListener(event);
 
     if (listener) {
-      listener(event)
+      listener(event);
     }
-  }
-
+  };
 
   public start = () => {
     if (!this.started) {
-      this.started = true
-      window.addEventListener('keydown', this.keydown)
+      this.started = true;
+      window.addEventListener("keydown", this.keydown);
     }
-  }
+  };
 
   public pause = () => {
     if (this.started) {
-      this.started = false
-      window.removeEventListener('keydown', this.keydown)
+      this.started = false;
+      window.removeEventListener("keydown", this.keydown);
     }
-  }
+  };
 
   private get registrations() {
     if (!this._registrations) {
-      throw new Error('Registrations were not passed to Window Listener')
+      throw new Error("Registrations were not passed to Window Listener");
     }
 
-    return this._registrations
+    return this._registrations;
   }
 }
 
-export default WindowListener
+export default WindowListener;
