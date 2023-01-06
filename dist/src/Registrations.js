@@ -12,7 +12,13 @@ class Registrations {
         }
         return Registrations.instance;
     }
-    findListener = (hotkey) => {
+    findListener = (e) => {
+        const hotkey = {
+            key: e.key,
+            isCtrlRequired: e.ctrlKey,
+            isMetaRequired: e.metaKey,
+            isShiftRequired: e.shiftKey,
+        };
         const key = getKey(hotkey);
         const stack = this.getStack(key);
         return stack.findListener();

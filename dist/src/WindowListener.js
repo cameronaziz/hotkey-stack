@@ -11,7 +11,7 @@ class WindowListener {
         return WindowListener.instance;
     }
     keydown = (event) => {
-        const listener = this.registrations.findListener(event.key);
+        const listener = this.registrations.findListener(event);
         if (listener) {
             listener(event);
         }

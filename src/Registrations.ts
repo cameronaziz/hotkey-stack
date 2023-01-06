@@ -1,23 +1,35 @@
-import type { HotkeyConfig, Listener } from '../typings';
-import Hotkey from './Hotkey';
-import StackItem from './StackItem';
-import getKey from './utils/getKey';
+import type { HotkeyComboConfig, HotkeyConfig, Listener } from '../typings'
+import Hotkey from './Hotkey'
+import StackItem from './StackItem'
+import getKey from './utils/getKey'
 
 class Registrations {
   private static instance: Registrations
   private listenerHotkeyMap: Map<Listener, Hotkey> = new Map<Listener, Hotkey>()
-  private configHotkeyMap: Map<HotkeyConfig, Hotkey> = new Map<HotkeyConfig, Hotkey>()
-  private listenerHotkeysMap: Map<Listener, Hotkey[]> = new Map<Listener, Hotkey[]>()
+  private configHotkeyMap: Map<HotkeyConfig, Hotkey> = new Map<
+    HotkeyConfig,
+    Hotkey
+  >()
+  private listenerHotkeysMap: Map<Listener, Hotkey[]> = new Map<
+    Listener,
+    Hotkey[]
+  >()
 
-  constructor(){
-    if(!Registrations.instance){
-      Registrations.instance = this;
+  constructor() {
+    if (!Registrations.instance) {
+      Registrations.instance = this
     }
 
-    return Registrations.instance;
+    return Registrations.instance
   }
 
-  public findListener = (hotkey: HotkeyConfig): Listener | null => {
+  public findListener = (e: KeyboardEvent): Listener | null => {
+    const hotkey: HotkeyComboConfig = {
+      key: e.key,
+      isCtrlRequired: e.ctrlKey,
+      isMetaRequired: e.metaKey,
+      isShiftRequired: e.shiftKey,
+    }
     const key = getKey(hotkey)
     const stack = this.getStack(key)
     return stack.findListener()
@@ -33,7 +45,7 @@ class Registrations {
         return
       }
     }
-    
+
     this.listenerHotkeyMap.set(listener, stack)
     this.addToListeners(listener, stack)
     const item = new StackItem(listener, key, symbol)
@@ -50,15 +62,15 @@ class Registrations {
 
   public pull = (listener: Listener, hotkey?: string) => {
     const stacks = this.findHotkeys(listener, hotkey)
-    
+
     stacks.forEach((stack) => {
       stack.pull(listener)
     })
   }
-  
+
   public cut = (listener: Listener, hotkey?: string) => {
     const stacks = this.findHotkeys(listener, hotkey)
-    
+
     stacks.forEach((stack) => {
       stack.cut(listener)
     })
@@ -100,7 +112,6 @@ class Registrations {
     }
 
     return this.listenerHotkeysMap.get(listener) as Hotkey[]
-
   }
 
   private static findHotkeyStack = (stacks: Hotkey[], hotkey: string) => {

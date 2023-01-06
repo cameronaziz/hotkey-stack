@@ -1,29 +1,27 @@
-import Registrations from './Registrations';
+import Registrations from './Registrations'
 
 class WindowListener {
   private started: boolean = false
   private _registrations?: Registrations
   private static instance: WindowListener
 
-
   constructor(registrations: Registrations) {
-    if(!WindowListener.instance) {
-      WindowListener.instance = this;
+    if (!WindowListener.instance) {
+      WindowListener.instance = this
       this._registrations = registrations
       this.start()
     }
- 
-    return WindowListener.instance;
+
+    return WindowListener.instance
   }
 
   private keydown = (event: KeyboardEvent) => {
-    const listener = this.registrations.findListener(event.key)
+    const listener = this.registrations.findListener(event)
 
     if (listener) {
       listener(event)
     }
   }
-
 
   public start = () => {
     if (!this.started) {

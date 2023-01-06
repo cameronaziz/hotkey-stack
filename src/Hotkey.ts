@@ -1,12 +1,12 @@
-import type { HotkeyConfig, Listener } from '../typings';
-import StackItem from './StackItem';
-import { isListener, isStackItem } from './typeguards';
+import type { HotkeyConfig, Listener } from '../typings'
+import StackItem from './StackItem'
+import { isListener, isStackItem } from './typeguards'
 
 class Hotkey {
   /**
    * A mapping of listeners to stack items.
    * This allows for constant time lookup of stack items.
-   * 
+   *
    * hotkey - Allows lookups on this.hotkeyMap
    * listener - Allows last added to be retrieved in this.hotkeyMap
    * onHold - Allows hotkeys listening to pause and not lose place in line
@@ -28,13 +28,13 @@ class Hotkey {
   private items: StackItem[]
   public hotkey: HotkeyConfig
 
-  constructor(hotkey: HotkeyConfig){
+  constructor(hotkey: HotkeyConfig) {
     this.items = []
     this.hotkey = hotkey
     this.stackItemMap = new Map<Listener, StackItem>()
     this.symbolTrash = new Map<Symbol, Listener>()
-   }
-   
+  }
+
   public findListener = (): Listener | null => {
     let index = this.items.length || -1
 
@@ -95,10 +95,10 @@ class Hotkey {
     if (this.symbolTrash.has(symbol)) {
       this.symbolTrash.delete(symbol)
     }
-    
+
     if (isListener(trashListener)) {
       const stackItem = this.stackItemMap.get(trashListener)
-      
+
       if (isStackItem(stackItem)) {
         stackItem.listener = listener
         stackItem.onHold = false
