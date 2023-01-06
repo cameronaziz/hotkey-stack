@@ -24,13 +24,13 @@ yarn add hotkey-stack
 ### Basic
 
 ```typescript
-import hs from "hotkey-stack";
+import hs from 'hotkey-stack'
 
 const callback = () => {
-  console.log("Callback Called");
-};
+  console.log('Callback Called')
+}
 
-hs.add("a", callback);
+hs.add('a', callback)
 ```
 
 #### Output when `A` key is pressed
@@ -42,18 +42,18 @@ Callback Called
 ### Multiple Listeners
 
 ```typescript
-import hs from "hotkey-stack";
+import hs from 'hotkey-stack'
 
 const oneCallback = () => {
-  console.log("One Callback Called");
-};
+  console.log('One Callback Called')
+}
 
 const twoCallback = () => {
-  console.log("Two Callback Called");
-};
+  console.log('Two Callback Called')
+}
 
-hs.add("a", oneCallback);
-hs.add("a", twoCallback);
+hs.add('a', oneCallback)
+hs.add('a', twoCallback)
 ```
 
 #### Output when `A` key is pressed
@@ -65,19 +65,19 @@ Two Callback Called
 ### Removing Listeners
 
 ```typescript
-import hs from "hotkey-stack";
+import hs from 'hotkey-stack'
 
 const oneCallback = () => {
-  console.log("One Callback Called");
-};
+  console.log('One Callback Called')
+}
 
 const twoCallback = () => {
-  console.log("Two Callback Called");
-};
+  console.log('Two Callback Called')
+}
 
-hs.add("a", oneCallback);
-hs.add("a", twoCallback);
-hs.pull(twoCallback);
+hs.add('a', oneCallback)
+hs.add('a', twoCallback)
+hs.pull(twoCallback)
 ```
 
 #### Output when `A` key is pressed
@@ -118,19 +118,19 @@ The listener stack
 Listeners can be temporaily
 
 ```typescript
-import hs from "hotkey-stack";
+import hs from 'hotkey-stack'
 
 const oneCallback = () => {
-  console.log("One Callback Called");
-};
+  console.log('One Callback Called')
+}
 
 const twoCallback = () => {
-  console.log("Two Callback Called");
-};
+  console.log('Two Callback Called')
+}
 
-hs.add("a", oneCallback);
-hs.add("a", twoCallback);
-hs.skip("a", twoCallback);
+hs.add('a', oneCallback)
+hs.add('a', twoCallback)
+hs.skip('a', twoCallback)
 ```
 
 #### Output when `A` key is pressed
@@ -146,22 +146,22 @@ This **does not** require the listener to be the same reference.
 The symbol passed to `add` will be used as the reference to retain the position.
 
 ```typescript
-import hs from "hotkey-stack";
+import hs from 'hotkey-stack'
 
-const oneSymbol = Symbol();
+const oneSymbol = Symbol()
 
 const oneCallback = () => {
-  console.log("One Callback Called");
-};
+  console.log('One Callback Called')
+}
 
 const twoCallback = () => {
-  console.log("Two Callback Called");
-};
+  console.log('Two Callback Called')
+}
 
-hs.add("a", oneCallback, oneSymbol);
-hs.add("a", twoCallback);
-hs.skip("a", oneCallback);
-hs.add("a", oneCallback, oneSymbol);
+hs.add('a', oneCallback, oneSymbol)
+hs.add('a', twoCallback)
+hs.skip('a', oneCallback)
+hs.add('a', oneCallback, oneSymbol)
 ```
 
 #### Output when `A` key is pressed
@@ -173,19 +173,19 @@ Two Callback Called
 ### Prioritizing Listener
 
 ```typescript
-import hs from "hotkey-stack";
+import hs from 'hotkey-stack'
 
 const oneCallback = () => {
-  console.log("One Callback Called");
-};
+  console.log('One Callback Called')
+}
 
 const twoCallback = () => {
-  console.log("Two Callback Called");
-};
+  console.log('Two Callback Called')
+}
 
-hs.add("a", oneCallback);
-hs.add("a", twoCallback);
-hs.cut("a", oneCallback);
+hs.add('a', oneCallback)
+hs.add('a', twoCallback)
+hs.cut('a', oneCallback)
 ```
 
 #### Output when `A` key is pressed

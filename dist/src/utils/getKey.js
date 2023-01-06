@@ -1,16 +1,16 @@
-import { isComboHotkey } from "./typeguards";
+import { isComboHotkey } from '../typeguards';
 const parseKey = (key) => {
     switch (key) {
-        case "Down":
-            return "ArrowDown";
-        case "Up":
-            return "ArrowUp";
-        case "Left":
-            return "ArrowLeft";
-        case "Right":
-            return "ArrowRight";
-        case "Esc":
-            return "Escape";
+        case 'Down':
+            return 'ArrowDown';
+        case 'Up':
+            return 'ArrowUp';
+        case 'Left':
+            return 'ArrowLeft';
+        case 'Right':
+            return 'ArrowRight';
+        case 'Esc':
+            return 'Escape';
         default: {
             if (key.length === 1) {
                 return key.toUpperCase();

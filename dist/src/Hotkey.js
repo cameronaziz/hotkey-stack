@@ -1,4 +1,4 @@
-import { isListener, isStackItem } from "./typeguards";
+import { isListener, isStackItem } from './typeguards';
 class Hotkey {
     stackItemMap;
     symbolTrash;
@@ -38,7 +38,7 @@ class Hotkey {
         if (!isStackItem(stackItem)) {
             return;
         }
-        if (typeof stackItem.symbol !== "symbol") {
+        if (typeof stackItem.symbol !== 'symbol') {
             this.pull(listener);
             return;
         }

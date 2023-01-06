@@ -1,6 +1,6 @@
-import Hotkey from "./Hotkey";
-import StackItem from "./StackItem";
-import getKey from "./utils/getKey";
+import Hotkey from './Hotkey';
+import StackItem from './StackItem';
+import getKey from './utils/getKey';
 class Registrations {
     static instance;
     listenerHotkeyMap = new Map();
@@ -26,7 +26,7 @@ class Registrations {
     add = (hotkey, listener, symbol) => {
         const key = getKey(hotkey);
         const stack = this.getStack(key);
-        if (typeof symbol === "symbol") {
+        if (typeof symbol === 'symbol') {
             const success = stack.enable(listener, symbol);
             if (success) {
                 return;

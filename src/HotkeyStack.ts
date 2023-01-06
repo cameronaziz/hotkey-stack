@@ -1,16 +1,16 @@
-import Registrations from './Registrations';
-import WindowListener from './WindowListener';
+import Registrations from './Registrations'
+import WindowListener from './WindowListener'
 
 class HotkeyStack {
   constructor() {
-    if(!HotkeyStack.instance) {
-      HotkeyStack.instance = this;
+    if (!HotkeyStack.instance) {
+      HotkeyStack.instance = this
       this._windowListener = new WindowListener(this.registrations)
     }
- 
-    return HotkeyStack.instance;
+
+    return HotkeyStack.instance
   }
-  
+
   private _windowListener?: WindowListener
   private static instance: HotkeyStack
   private registrations: Registrations = new Registrations()

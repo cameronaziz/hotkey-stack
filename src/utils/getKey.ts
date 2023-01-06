@@ -1,26 +1,26 @@
-import { HotkeyComboConfig, HotkeyConfig } from "../../typings";
-import { isComboHotkey } from "./typeguards";
+import { HotkeyComboConfig, HotkeyConfig } from '../../typings'
+import { isComboHotkey } from '../typeguards'
 
 const parseKey = (key: string): string => {
   switch (key) {
-    case "Down":
-      return "ArrowDown";
-    case "Up":
-      return "ArrowUp";
-    case "Left":
-      return "ArrowLeft";
-    case "Right":
-      return "ArrowRight";
-    case "Esc":
-      return "Escape";
+    case 'Down':
+      return 'ArrowDown'
+    case 'Up':
+      return 'ArrowUp'
+    case 'Left':
+      return 'ArrowLeft'
+    case 'Right':
+      return 'ArrowRight'
+    case 'Esc':
+      return 'Escape'
     default: {
       if (key.length === 1) {
-        return key.toUpperCase();
+        return key.toUpperCase()
       }
-      return key;
+      return key
     }
   }
-};
+}
 
 const buildKeyString = (key: HotkeyComboConfig): string =>
   `
@@ -31,7 +31,7 @@ isMetaRequired: ${key.isMetaRequired},\
 isShiftRequired: ${key.isShiftRequired},\
 isAltRequired: ${key.isAltRequired},\
 }
-`;
+`
 
 const getKey = (key: HotkeyConfig): string => {
   if (isComboHotkey(key)) {
@@ -41,7 +41,7 @@ const getKey = (key: HotkeyConfig): string => {
       isShiftRequired: key.isShiftRequired || false,
       isAltRequired: key.isAltRequired || false,
       key: key.key,
-    });
+    })
   }
   return buildKeyString({
     isCtrlRequired: false,
@@ -49,7 +49,7 @@ const getKey = (key: HotkeyConfig): string => {
     isShiftRequired: false,
     isAltRequired: false,
     key,
-  });
-};
+  })
+}
 
-export default getKey;
+export default getKey

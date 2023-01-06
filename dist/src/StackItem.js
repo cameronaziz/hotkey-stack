@@ -1,4 +1,4 @@
-import { isBasicHotkey } from "./utils/typeguards";
+import { isBasicHotkey } from './typeguards';
 class StackItem {
     listener;
     hotkey;
@@ -16,6 +16,7 @@ class StackItem {
             this.isMetaRequired = false;
             this.isCtrlRequired = false;
             this.isShiftRequired = false;
+            this.isAltRequired = false;
             this.hotkey = hotkey;
             return;
         }
