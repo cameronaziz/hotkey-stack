@@ -1,8 +1,8 @@
-import type { HotkeyConfig, Listener } from '../typings'
+import type { HotkeyConfig, Listener } from '../../typings'
 import StackItem from './StackItem'
-import { isListener, isStackItem } from './typeguards'
+import { isListener, isStackItem } from '../typeguards'
 
-class Hotkey {
+class Stack {
   /**
    * A mapping of listeners to stack items.
    * This allows for constant time lookup of stack items.
@@ -113,4 +113,4 @@ class Hotkey {
     this.stackItemMap.get(listener) || null
 }
 
-export default Hotkey
+export default Stack
