@@ -1,19 +1,19 @@
-import Registrations from './Registrations/Registrations'
-import WindowListener from './WindowListener'
+import Listeners from './Listeners'
+import Stacks from './Stacks'
 
 class HotkeyStack {
   constructor() {
     if (!HotkeyStack.instance) {
       HotkeyStack.instance = this
-      this._windowListener = new WindowListener(this.registrations)
+      this._listeners = new Listeners(this.stacks)
     }
 
     return HotkeyStack.instance
   }
 
-  private _windowListener?: WindowListener
+  private _listeners?: Listeners
   private static instance: HotkeyStack
-  private registrations: Registrations = new Registrations()
+  private stacks: Stacks = new Stacks()
 
   /**
    * Add a new listener into the stack
@@ -22,7 +22,7 @@ class HotkeyStack {
    * @memberof HotkeyStack
    */
   public get add() {
-    return this.registrations.add
+    return this.stacks.add
   }
 
   /**
@@ -32,7 +32,7 @@ class HotkeyStack {
    * @memberof HotkeyStack
    */
   public get cut() {
-    return this.registrations.cut
+    return this.stacks.cut
   }
 
   /**
@@ -43,7 +43,7 @@ class HotkeyStack {
    * @memberof HotkeyStack
    */
   public get skip() {
-    return this.registrations.skip
+    return this.stacks.skip
   }
 
   /**
@@ -53,7 +53,7 @@ class HotkeyStack {
    * @memberof HotkeyStack
    */
   public get pull() {
-    return this.registrations.pull
+    return this.stacks.pull
   }
 
   /**
@@ -63,7 +63,7 @@ class HotkeyStack {
    * @memberof HotkeyStack
    */
   public get pause() {
-    return this.windowListener.pause
+    return this.listeners.pause
   }
 
   /**
@@ -74,14 +74,14 @@ class HotkeyStack {
    * @memberof HotkeyStack
    */
   public get start() {
-    return this.windowListener.start
+    return this.listeners.start
   }
 
-  private get windowListener() {
-    if (typeof this._windowListener === 'undefined') {
-      this._windowListener = new WindowListener(this.registrations)
+  private get listeners() {
+    if (typeof this._listeners === 'undefined') {
+      this._listeners = new Listeners(this.stacks)
     }
-    return this._windowListener
+    return this._listeners
   }
 }
 

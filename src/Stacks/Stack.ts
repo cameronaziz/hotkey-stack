@@ -1,6 +1,6 @@
-import type { HotkeyConfig, Listener } from '../../typings'
-import StackItem from './StackItem'
 import { isListener, isStackItem } from '../typeguards'
+import type { EventListener, HotkeyConfig } from '../typings'
+import StackItem from './StackItem'
 
 class Stack {
   /**
@@ -15,7 +15,7 @@ class Stack {
    * @private
    * @memberof Stack
    */
-  private stackItemMap: Map<Listener, StackItem>
+  private stackItemMap: Map<EventListener, StackItem>
   /**
    * A mapping of symbols to listeners
    * This allows for constant time lookup of original listeners.
@@ -24,18 +24,18 @@ class Stack {
    * @private
    * @memberof Stack
    */
-  private symbolTrash: Map<Symbol, Listener>
+  private symbolTrash: Map<Symbol, EventListener>
   private items: StackItem[]
   public hotkey: HotkeyConfig
 
   constructor(hotkey: HotkeyConfig) {
     this.items = []
     this.hotkey = hotkey
-    this.stackItemMap = new Map<Listener, StackItem>()
-    this.symbolTrash = new Map<Symbol, Listener>()
+    this.stackItemMap = new Map<EventListener, StackItem>()
+    this.symbolTrash = new Map<Symbol, EventListener>()
   }
 
-  public findListener = (): Listener | null => {
+  public findListener = (): EventListener | null => {
     let index = this.items.length || -1
 
     while (index > -1) {
@@ -54,34 +54,34 @@ class Stack {
     this.stackItemMap.set(item.listener, item)
   }
 
-  public pull = (listener: Listener, hotkey?: string) => {
-    const stackItem = this.findStackItem(listener)
+  public pull = (eventListener: EventListener, _hotkey?: string) => {
+    const stackItem = this.findStackItem(eventListener)
 
     if (!isStackItem(stackItem)) {
       return
     }
 
-    this.stackItemMap.delete(listener)
+    this.stackItemMap.delete(eventListener)
     this.items = this.items.filter((item) => item !== stackItem)
   }
 
-  public skip = (listener: Listener, hotkey?: string) => {
-    const stackItem = this.findStackItem(listener)
+  public skip = (eventListener: EventListener, hotkey?: string) => {
+    const stackItem = this.findStackItem(eventListener)
     if (!isStackItem(stackItem)) {
       return
     }
 
     if (typeof stackItem.symbol !== 'symbol') {
-      this.pull(listener)
+      this.pull(eventListener)
       return
     }
 
     stackItem.onHold = true
-    this.symbolTrash.set(stackItem.symbol, listener)
+    this.symbolTrash.set(stackItem.symbol, eventListener)
   }
 
-  public cut = (listener: Listener) => {
-    const itemIndex = this.items.findIndex((item) => item.listener === listener)
+  public cut = (eventListener: EventListener) => {
+    const itemIndex = this.items.findIndex((item) => item.listener === eventListener)
     if (itemIndex > -1) {
       const item = this.items[itemIndex]
       this.items.splice(itemIndex, 1)
@@ -89,7 +89,7 @@ class Stack {
     }
   }
 
-  public enable = (listener: Listener, symbol: Symbol) => {
+  public enable = (eventListener: EventListener, symbol: Symbol) => {
     const trashListener = this.symbolTrash.get(symbol)
 
     if (this.symbolTrash.has(symbol)) {
@@ -100,7 +100,7 @@ class Stack {
       const stackItem = this.stackItemMap.get(trashListener)
 
       if (isStackItem(stackItem)) {
-        stackItem.listener = listener
+        stackItem.listener = eventListener
         stackItem.onHold = false
         return true
       }
@@ -109,8 +109,8 @@ class Stack {
     return false
   }
 
-  private findStackItem = (listener: Listener) =>
-    this.stackItemMap.get(listener) || null
+  private findStackItem = (eventListener: EventListener) =>
+    this.stackItemMap.get(eventListener) || null
 }
 
 export default Stack

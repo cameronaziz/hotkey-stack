@@ -1,5 +1,5 @@
-import { HotkeyComboConfig, HotkeyConfig } from '../../typings'
 import { isComboHotkey } from '../typeguards'
+import { HotkeyComboConfig, HotkeyConfig } from '../typings'
 
 const parseKey = (key: string): string => {
   switch (key) {

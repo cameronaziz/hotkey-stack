@@ -7,7 +7,8 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "outDir": "dist",
+    "moduleResolution": "Node",
     "strictPropertyInitialization": false
   },
-  "include": ["src/**/*", "index.ts", "typings.d.ts"]
+  "include": ["src/**/*", "index.ts", "src/typings.d.ts"]
 }

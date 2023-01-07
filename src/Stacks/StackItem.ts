@@ -1,8 +1,8 @@
-import type { HotkeyConfig, Listener } from '../typings'
-import { isBasicHotkey } from './typeguards'
+import { isBasicHotkey } from '../typeguards'
+import type { EventListener, HotkeyConfig } from '../typings'
 
 class StackItem {
-  public listener: Listener
+  public listener: EventListener
   public hotkey: string
   public isMetaRequired: boolean
   public isShiftRequired: boolean
@@ -11,8 +11,8 @@ class StackItem {
   public onHold: boolean
   public symbol?: Symbol
 
-  constructor(listener: Listener, hotkey: HotkeyConfig, symbol?: Symbol) {
-    this.listener = listener
+  constructor(eventListener: EventListener, hotkey: HotkeyConfig, symbol?: Symbol) {
+    this.listener = eventListener
     this.onHold = false
     this.symbol = symbol
     if (isBasicHotkey(hotkey)) {

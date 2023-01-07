@@ -1,5 +1,5 @@
-import HotkeyStack from "./src/HotkeyStack";
-import StackItem from "./src/StackItem";
+import HotkeyStack from './HotkeyStack';
+import StackItem from './Stacks/StackItem';
 
 export type HotkeyComboConfig = {
   key: string;
@@ -10,7 +10,7 @@ export type HotkeyComboConfig = {
 };
 
 export type HotkeyConfig = string | HotkeyComboConfig;
-export type Listener = (event: KeyboardEvent) => void;
-export type StackMap = Map<Listener, StackItem>;
+export type EventListener = (event: KeyboardEvent) => void;
+export type StackMap = Map<EventListener, StackItem>;
 
 export default HotkeyStack;

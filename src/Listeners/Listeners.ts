@@ -1,18 +1,18 @@
-import Registrations from './Registrations/Registrations'
+import Registrations from '../Stacks'
 
-class WindowListener {
+class Listeners {
   private started: boolean = false
   private _registrations?: Registrations
-  private static instance: WindowListener
+  private static instance: Listeners
 
   constructor(registrations: Registrations) {
-    if (!WindowListener.instance) {
-      WindowListener.instance = this
+    if (!Listeners.instance) {
+      Listeners.instance = this
       this._registrations = registrations
       this.start()
     }
 
-    return WindowListener.instance
+    return Listeners.instance
   }
 
   private keydown = (event: KeyboardEvent) => {
@@ -46,4 +46,4 @@ class WindowListener {
   }
 }
 
-export default WindowListener
+export default Listeners
