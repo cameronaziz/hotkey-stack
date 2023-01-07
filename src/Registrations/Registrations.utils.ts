@@ -23,15 +23,14 @@ const parseKey = (key: string): string => {
 }
 
 const buildKeyString = (key: HotkeyComboConfig): string =>
-  `
-key: ${parseKey(key.key)},\
-isCtrlRequired: ${key.isCtrlRequired},\
-isMetaRequired: ${key.isMetaRequired},\
-isShiftRequired: ${key.isShiftRequired},\
-isAltRequired: ${key.isAltRequired},\
-`
+  `\
+    key: ${parseKey(key.key)};\
+    isCtrlRequired: ${key.isCtrlRequired};\
+    isMetaRequired: ${key.isMetaRequired};\
+    isShiftRequired: ${key.isShiftRequired};\
+    isAltRequired: ${key.isAltRequired};`
 
-const getKey = (key: HotkeyConfig): string => {
+export const getKey = (key: HotkeyConfig): string => {
   if (isComboHotkey(key)) {
     return buildKeyString({
       isCtrlRequired: key.isCtrlRequired || false,
@@ -49,5 +48,3 @@ const getKey = (key: HotkeyConfig): string => {
     key,
   })
 }
-
-export default getKey

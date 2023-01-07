@@ -1,4 +1,4 @@
-import Registrations from './Registrations'
+import Registrations from './Registrations/Registrations'
 import WindowListener from './WindowListener'
 
 class HotkeyStack {
@@ -85,5 +85,5 @@ class HotkeyStack {
   }
 }
 
-const instance = new HotkeyStack()
-export default instance
+const hks = new HotkeyStack()
+export default hks

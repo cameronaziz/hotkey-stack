@@ -1,18 +1,18 @@
-import type { HotkeyComboConfig, HotkeyConfig, Listener } from '../typings'
-import Hotkey from './Hotkey'
+import type { HotkeyComboConfig, HotkeyConfig, Listener } from '../../typings'
+import Stack from './Stack'
 import StackItem from './StackItem'
-import getKey from './utils/getKey'
+import { getKey } from './Registrations.utils'
 
 class Registrations {
   private static instance: Registrations
-  private listenerHotkeyMap: Map<Listener, Hotkey> = new Map<Listener, Hotkey>()
-  private configHotkeyMap: Map<HotkeyConfig, Hotkey> = new Map<
+  private listenerHotkeyMap: Map<Listener, Stack> = new Map<Listener, Stack>()
+  private configStackMap: Map<HotkeyConfig, Stack> = new Map<
     HotkeyConfig,
-    Hotkey
+    Stack
   >()
-  private listenerHotkeysMap: Map<Listener, Hotkey[]> = new Map<
+  private listenerStacksMap: Map<Listener, Stack[]> = new Map<
     Listener,
-    Hotkey[]
+    Stack[]
   >()
 
   constructor() {
@@ -76,23 +76,23 @@ class Registrations {
     })
   }
 
-  private getStack = (hotkey: HotkeyConfig): Hotkey => {
-    if (!this.configHotkeyMap.has(hotkey)) {
-      const stack = new Hotkey(hotkey)
-      this.configHotkeyMap.set(hotkey, stack)
+  private getStack = (hotkey: HotkeyConfig): Stack => {
+    if (!this.configStackMap.has(hotkey)) {
+      const stack = new Stack(hotkey)
+      this.configStackMap.set(hotkey, stack)
     }
 
-    return this.configHotkeyMap.get(hotkey) as Hotkey
+    return this.configStackMap.get(hotkey) as Stack
   }
 
-  private addToListeners = (listener: Listener, stack: Hotkey) => {
+  private addToListeners = (listener: Listener, stack: Stack) => {
     const hotkeys = this.findHotkeys(listener)
     hotkeys.push(stack)
   }
 
   private findHotkeys = (listener: Listener, hotkey?: string) => {
-    if (!this.listenerHotkeysMap.has(listener)) {
-      this.listenerHotkeysMap.set(listener, [])
+    if (!this.listenerStacksMap.has(listener)) {
+      this.listenerStacksMap.set(listener, [])
     }
 
     const stacks = this.getListenerHotkeys(listener)
@@ -104,17 +104,17 @@ class Registrations {
     return stacks
   }
 
-  private getListenerHotkeys = (listener: Listener): Hotkey[] => {
-    if (!this.listenerHotkeysMap.has(listener)) {
-      const newHotkeys: Hotkey[] = []
-      this.listenerHotkeysMap.set(listener, newHotkeys)
+  private getListenerHotkeys = (listener: Listener): Stack[] => {
+    if (!this.listenerStacksMap.has(listener)) {
+      const newHotkeys: Stack[] = []
+      this.listenerStacksMap.set(listener, newHotkeys)
       return newHotkeys
     }
 
-    return this.listenerHotkeysMap.get(listener) as Hotkey[]
+    return this.listenerStacksMap.get(listener) as Stack[]
   }
 
-  private static findHotkeyStack = (stacks: Hotkey[], hotkey: string) => {
+  private static findHotkeyStack = (stacks: Stack[], hotkey: string) => {
     const foundStack = stacks.find((stack) => stack.hotkey === hotkey)
     if (!foundStack) {
       return []

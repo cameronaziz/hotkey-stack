@@ -1,4 +1,4 @@
-import Registrations from './Registrations'
+import Registrations from './Registrations/Registrations'
 
 class WindowListener {
   private started: boolean = false
