@@ -1,8 +1,8 @@
 import { debug, getInput, setFailed } from '@actions/core';
+import { Github, WebhookPayload } from '../../types';
 import addPRToBoard from './addPRToBoard';
 import getProjectDetails from './getProjectDetails';
 import setPriorityField from './setPriorityField';
-import { Github, WebhookPayload } from './types';
 
 /**
  * Handle automatic triage of Pull Requests into a Github Project board.

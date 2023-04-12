@@ -1,6 +1,6 @@
 import { debug } from '@actions/core'
-import { AddIssueToProjectMutation } from './api'
-import { Github, ProjectInfo } from './types'
+import { AddIssueToProjectMutation } from '../../api'
+import { Github, ProjectInfo } from '../../types'
 
 /**
  * Add PR to our project board.

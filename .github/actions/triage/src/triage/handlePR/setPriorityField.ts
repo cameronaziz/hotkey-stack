@@ -1,6 +1,6 @@
 import { debug, } from '@actions/core';
-import { ProjectField, SelectField, SetStatusMutation } from './api';
-import { Github, ProjectInfo } from './types';
+import { ProjectField, SelectField, SetStatusMutation } from '../../api';
+import { Github, ProjectInfo } from '../../types';
 
 const isSelectField = (field: ProjectField): field is SelectField =>
 	Array.isArray((field as SelectField).options)

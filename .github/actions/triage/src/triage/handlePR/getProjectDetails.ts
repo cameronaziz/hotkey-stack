@@ -1,6 +1,6 @@
 import { debug } from '@actions/core';
-import { GetProjectQuery } from './api';
-import { Github, ProjectInfo } from './types';
+import { GetProjectQuery } from '../../api';
+import { Github, ProjectInfo } from '../../types';
 
 /* global WebhookPayloadPullRequest, GitHub */
 
