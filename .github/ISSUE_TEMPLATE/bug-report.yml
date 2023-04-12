@@ -13,16 +13,51 @@ body:
         ...
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ### SSS
+        The Severity and Scale Score is a metric we need to know for the issue you are reporting.
+
+        #### Severity
+        How severe is this issue? Is this going to cause a customer to drop Evidently or is some color not quite right? Determine what _impact_ this bug has created.
+        | Score | Description | Example |
+        | --- | --- | --- |
+        | I0 | A critical bug that many users are experienced at the same time. Leadership will be **immediately involved** upon issue creation. | Global Search does not fetch results from the server |
+        | I1 | A bug that many users are experiencing but can still use the application. Leadership will be **immediately notified** upon issue creation. |  |
+        | I2 | A bug that is important but does not need a hotfix. | |
+        | I3 | A bug that really should get fixed as soon as possible. | |
+        | I4 | A bug that has very low customer impact. | The data panel's title is the wrong scale of midnight. |
+
+        #### Scale
+        Put on your engineering hat for a moment and give it a high level thought of the scale of this bug. How much _work_ is going to be needed to fix it?
+        | Score | Description | Example |
+        | --- | --- | --- |
+        | W0 | Resolution will require major re-architecture of part of the application. Leadership will be **immediately involved** upon issue creation. | |
+        | W1 | Resolution will likely require an engineer's full attention for an entire sprint to resolve. Leadership will be **immediately notified** upon issue creation. |  |
+        | W2 | Resolution will likely require less than a day to resolve. | |
+        | W3 | Resolution will likely require little to no lines of changes. | |
   - type: dropdown
-    id: users-affected
+    id: severity
     attributes:
       label: Severity
-      description: How many users are impacted? A guess is fine.
+      description: What is the severity is this issue? How impactful is it? Remember, this IS NOT the scale of the issue.
       options:
-        - One
-        - Some (< 50%)
-        - Most (> 50%)
-        - All
+        - I0
+        - I1
+        - I2
+        - I3
+        - I4
+  - type: dropdown
+    id: scale
+    attributes:
+      label: Scale
+      description: What is the scale of this issue? How much work will it take to resolve? Remember, this IS NOT the severity of the issue.
+      options:
+        - W0
+        - W1
+        - W2
+        - W3
   - type: dropdown
     id: workarounds
     attributes:
