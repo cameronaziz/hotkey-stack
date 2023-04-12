@@ -44,7 +44,8 @@ const getNextBody = (currentBody: string, issue: string) => {
     const sectionStartIndex = index + sectionTitle.length
     const remainingText = currentBody.substring(sectionStartIndex)
     const nextSectionIndex = remainingText.indexOf('###')
-    return `${currentBody.substring(0, sectionStartIndex)}${result}${currentBody.substring(nextSectionIndex)}`
+    const remaining = nextSectionIndex < 0 ? '' : remainingText.substring(nextSectionIndex)
+    return `${currentBody.substring(0, sectionStartIndex)}${result}${remaining}`
   }
 
   return `${currentBody}${result}`
