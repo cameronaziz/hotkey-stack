@@ -22,37 +22,34 @@ const split = (associatedProject: string | string[], splitter: string | string[]
   )
 }
 
-const parseProject = (associatedProject: string) => {
+const parseProject = (associatedProject: string | null) => {
+  if (associatedProject === null) {
+    return []
+  }
   // Split by `:` `;` `-` and `:`.
   const splits = [':', ';', '-', ',']
-  return split(associatedProject, splits)
+  return split(associatedProject.trim(), splits)
 }
 
+console.log(parseProject(' #12, #123'))
+
 const handleAssociatedProject = async (oneLineBody: string) => {
-  const { issue, repository } = context.payload
+  const { repository } = context.payload
 
   const githubToken = getInput('github_token')
-  const associatedProject = getSectionValue(oneLineBody, ASSOCIATED_PROJECT)
-  if (associatedProject === null) {
-    debug('no project')
+  if (!repository) {
     return
   }
-
+  
+  const associatedProject = getSectionValue(oneLineBody, ASSOCIATED_PROJECT)
   const projects = parseProject(associatedProject)
 
-  if (!repository) {
-    debug('no repo')
+  if (projects.length === 0) {
     return
   }
 
-  if (projects.length > 0) {
-    debug('no projects')
-    return
-  }
   const { owner, name } = repository
-
   const octokit = getOctokit(githubToken)
-
   projects.forEach(async (project) => {
     const issue_number = parseInt(project)
     const other = await octokit.rest.issues.get({
