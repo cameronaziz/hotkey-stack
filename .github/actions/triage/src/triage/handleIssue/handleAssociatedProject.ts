@@ -34,12 +34,19 @@ const handleAssociatedProject = async (oneLineBody: string) => {
   const githubToken = getInput('github_token')
   const associatedProject = getSectionValue(oneLineBody, ASSOCIATED_PROJECT)
   if (!associatedProject) {
+    debug('no project')
     return
   }
 
   const projects = parseProject(associatedProject)
 
-  if (projects.length > 0 || !repository) {
+  if (!repository) {
+    debug('no repo')
+    return
+  }
+
+  if (projects.length > 0) {
+    debug('no projects')
     return
   }
   const { owner, name } = repository

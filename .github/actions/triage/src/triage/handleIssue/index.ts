@@ -28,6 +28,7 @@ const logIssue = (payload: Project.WebhookPayload, githubToken: string) => {
 
 const handleIssue = async () => {
   const githubToken = getInput('github_token')
+  debug('Handling Issue')
   const { issue, repository } = context.payload
   
   if (!issue || !issue.body || !repository || !githubToken || githubToken === '') {
