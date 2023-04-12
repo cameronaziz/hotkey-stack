@@ -21,14 +21,14 @@ const triagePrToProject = async(payload: WebhookPayload, octokit: Github)  => {
 	const { number, draft, node_id } = pull_request
 	const isDraft = !! draft;
 
-	const projectBoardLink = 'https://github.com/users/cameronaziz/projects/10'
-	if (!projectBoardLink) {
+	const projectBoard = getInput('project_board')
+	if (!projectBoard) {
 		setFailed('Triage: No project board link provided. Cannot triage to a board');
 		return;
 	}
 
 	// Get details about our project board, to use in our requests.
-	const projectInfo = await getProjectDetails(octokit, projectBoardLink);
+	const projectInfo = await getProjectDetails(octokit, projectBoard);
 	if (!projectInfo || ! projectInfo.projectNodeId) {
 		setFailed('Triage: we cannot fetch info about our project board. Cannot triage to a board');
 		return;

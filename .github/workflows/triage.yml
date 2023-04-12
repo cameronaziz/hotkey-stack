@@ -32,5 +32,5 @@ jobs:
        uses: ./.github/actions/triage/
        with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        triage_projects_token: ${{ secrets.TRIAGE_PROJECTS_TOKEN }}
-        triage_projects_board: https://github.com/users/cameronaziz/projects/10/
+        projects_token: ${{ secrets.TRIAGE_PROJECTS_TOKEN }}
+        project_board: https://github.com/users/cameronaziz/projects/10/

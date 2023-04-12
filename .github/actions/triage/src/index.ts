@@ -1,15 +1,12 @@
-import { getInput, setFailed } from '@actions/core';
+import { debug, getInput, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import definePriority from './defineProperty';
-import { debug } from './log';
 import triagePrToProject from './triagePRToProject';
 
-
 (async function main() {
-	const github_token: string = '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';
-	debug('Our action is running', true);
+	debug('Our action is running');
 
-	const token = github_token
+	const token = getInput('github_token');
 	if (!token) {
 		setFailed('Input `github_token` is required');
 		return;
@@ -21,17 +18,16 @@ import triagePrToProject from './triagePRToProject';
 	// Get info about the event.
 	const { payload, eventName } = context;
 
-	debug(`Received event = '${eventName}', action = '${payload.action}'`, true);
 
 	// Let's monitor changes to Pull Requests.
-	const projectToken = github_token
+	const projectsToken = getInput('projects_token');
 
-	if (eventName === 'pull_request_target' && projectToken !== '') {
+	if (eventName === 'pull_request_target' && projectsToken !== '') {
 		debug(`Triage: now processing a change to a Pull Request`);
 
 		// For this task, we need octokit to have extra permissions not provided by the default GitHub token.
 		// Let's create a new octokit instance using our own custom token.
-		const projectOctokit = getOctokit(projectToken);
+		const projectOctokit = getOctokit(projectsToken);
 		await triagePrToProject(payload, projectOctokit);
 	}
 
@@ -52,7 +48,7 @@ import triagePrToProject from './triagePRToProject';
 		}
 
 		// List of labels to add to the issue.
-		const labels = [ 'Issue triaged' ];
+		const labels = ['Issue triaged'];
 
 		// Look for priority indicators in body.
 		const priorityRegex = /###\sSeverity\n\n(?<severity>.*)\n\n###\sAvailable\sworkarounds\?\n\n(?<workaround>.*)\n/gm;

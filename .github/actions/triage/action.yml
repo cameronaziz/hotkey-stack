@@ -5,12 +5,12 @@ inputs:
     description: "GitHub access token"
     required: true
     default: ${{ github.token }}
-  triage_projects_token:
-    description: "Triage Projects access token"
+  projects_token:
+    description: "Projects Access Token"
     required: false
     default: ""
-  triage_projects_board:
-    description: "Triage Projects board URL"
+  project_board:
+    description: "Project Board URL"
     required: false
     default: ""
 runs:
