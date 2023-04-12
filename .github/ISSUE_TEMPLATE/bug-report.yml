@@ -1,6 +1,6 @@
 name: Bug Report
+title: "[Bug]: "
 description: Tell me everything. Is the sky falling on your head, or is it just a bug in the code?
-labels: [ '[Type] Bug' ]
 body:
   - type: textarea
     id: steps

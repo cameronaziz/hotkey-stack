@@ -1,6 +1,6 @@
 name: Feature
 description: Lets make a pretty thing.
-labels: [ '[Type] Feature' ]
+title: "[Feature]: "
 body:
   - type: textarea
     id: description
