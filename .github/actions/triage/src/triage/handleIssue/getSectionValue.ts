@@ -13,8 +13,11 @@ const getSectionValue = (oneLineBody: string, title: string) => {
   const sectionStartIndex = index + sectionTitle.length
   const remainingText = oneLineBody.substring(sectionStartIndex)
   const nextSection = remainingText.indexOf('###')
+  console.log('nextSection', nextSection)
   const nextSectionIndex = nextSection < 0 ? undefined : nextSection
+  console.log('nextSectionIndex', nextSectionIndex)
   const text = remainingText.substring(0, nextSectionIndex)
+  console.log('text', text)
   return text
 }
 
