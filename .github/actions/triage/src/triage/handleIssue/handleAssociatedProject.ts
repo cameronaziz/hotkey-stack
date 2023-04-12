@@ -38,6 +38,7 @@ const getNextBody = (currentBody: string, issueNumber: number) => {
   const sectionTitle = `### ${CHILD_ISSUES}`
   const oneLineBody = oneLine(currentBody)
   const current = getSectionValue(oneLineBody, CHILD_ISSUES)
+  console.log(current)
 
   
   if (currentBody.includes(sectionTitle)) {
@@ -46,6 +47,7 @@ const getNextBody = (currentBody: string, issueNumber: number) => {
     const remainingText = currentBody.substring(sectionStartIndex)
     const nextSectionIndex = remainingText.indexOf('###')
     const projects = parseProject(current)
+    console.log(projects)
     projects.push(`#${issueNumber}`)
     const result = projects.join(', ')
     const remaining = nextSectionIndex < 0 ? '' : remainingText.substring(nextSectionIndex)
