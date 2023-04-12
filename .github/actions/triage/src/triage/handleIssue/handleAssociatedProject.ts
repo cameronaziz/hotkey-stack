@@ -33,7 +33,7 @@ const handleAssociatedProject = async (oneLineBody: string) => {
 
   const githubToken = getInput('github_token')
   const associatedProject = getSectionValue(oneLineBody, ASSOCIATED_PROJECT)
-  if (!associatedProject) {
+  if (associatedProject === null) {
     debug('no project')
     return
   }
