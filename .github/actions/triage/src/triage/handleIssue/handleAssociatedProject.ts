@@ -4,20 +4,20 @@ import getSectionValue, { oneLine } from './getSectionValue'
 
 const ASSOCIATED_PROJECT = 'Associated Project'
 const CHILD_ISSUES = 'Child Issues'
+const SPLITS = [':', ';', '-', ',']
 
-const split = (associatedProject: string | string[], splitter: string | string[]) => {
+const split = (associatedProject: string | string[]) => {
   const projects = Array.isArray(associatedProject) ? associatedProject : [associatedProject]
-  const splitters = Array.isArray(splitter) ? splitter : [splitter]
   return projects.flatMap(
-    (project) => splitters
-      .flatMap((splitBy) => {
-        if (project.includes(splitBy)) {
+    (project) => SPLITS
+      .flatMap((split) => {
+        if (project.includes(split)) {
           return project
-            .split(splitBy)
+            .split(split)
             .map((item) => item.trim().replace('#', ''))
 
         }
-        return null
+        return project.trim().replace('#', '')
       })
       .filter((item): item is string => !!item)
   )
@@ -28,8 +28,8 @@ const parseProject = (associatedProject: string | null) => {
     return []
   }
   // Split by `:` `;` `-` and `:`.
-  const splits = [':', ';', '-', ',']
-  return split(associatedProject.trim(), splits)
+  
+  return split(associatedProject.trim())
 }
 
 const createChildIssue = (issue: number) => `### ${CHILD_ISSUES}\n\n#${issue}`
