@@ -1,6 +1,6 @@
 import { debug, getInput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
-import getSectionValue from './getSectionValue'
+import getSectionValue, { oneLine } from './getSectionValue'
 
 const ASSOCIATED_PROJECT = 'Associated Project'
 const CHILD_ISSUES = 'Child Issues'
@@ -36,19 +36,23 @@ const createChildIssue = (issue: string) => `### ${CHILD_ISSUES}\n\n#${issue}`
 
 const getNextBody = (currentBody: string, issue: string) => {
   const sectionTitle = `### ${CHILD_ISSUES}`
+  const oneLineBody = oneLine(currentBody)
+  const current = getSectionValue(oneLineBody, CHILD_ISSUES)
 
-  const result = `\n\n${createChildIssue(issue)}`
-
+  
   if (currentBody.includes(sectionTitle)) {
     const index = currentBody.lastIndexOf(sectionTitle)
     const sectionStartIndex = index + sectionTitle.length
     const remainingText = currentBody.substring(sectionStartIndex)
     const nextSectionIndex = remainingText.indexOf('###')
+    const projects = parseProject(current)
+    projects.push(`#${issue}`)
+    const result = projects.join(', ')
     const remaining = nextSectionIndex < 0 ? '' : remainingText.substring(nextSectionIndex)
     return `${currentBody.substring(0, sectionStartIndex)}${result}${remaining}`
   }
-
-  return `${currentBody}${result}`
+  
+  return `${currentBody}\n\n${createChildIssue(issue)}}`
 
 
 }

@@ -2,6 +2,7 @@ import { debug, getInput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 import Project from '../../typings/Project'
 import getLabelsToAdd from './getLabelsToAdd'
+import { oneLine } from './getSectionValue'
 import handleAssociatedProject from './handleAssociatedProject'
 
 const logIssue = (payload: Project.WebhookPayload, githubToken: string) => {
@@ -38,7 +39,7 @@ const handleIssue = async () => {
   
   const { owner, name } = repository
   const { number, body } = issue
-  const oneLineBody = body.replace(/(\r\n|\n|\r)/gm, '')
+  const oneLineBody = oneLine(body)
   const labels = getLabelsToAdd(oneLineBody)
   handleAssociatedProject(oneLineBody)
   

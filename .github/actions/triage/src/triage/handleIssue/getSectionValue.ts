@@ -1,4 +1,4 @@
-import { debug, getInput } from '@actions/core'
+export const oneLine = (content: string): string => content.replace(/(\r\n|\n|\r)/gm, '')
 
 const getSectionValue = (oneLineBody: string, title: string) => {
   const sectionTitle = `### ${title}`
