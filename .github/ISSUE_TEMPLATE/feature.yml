@@ -1,0 +1,29 @@
+name: Feature
+description: Lets make a pretty thing.
+labels: [ '[Type] Feature' ]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Clear and Concise Description
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Team
+      description: What team(s) should be notified of this issue?
+      multiple: true
+      options:
+        - Apps Eng
+        - Data Eng
+    validations:
+      required: false
+  - type: input
+    id: epic
+    attributes:
+      label: Associated Project
+      description: Is there an issue that this should be associated with?
+      placeholder: #1234
+    validations:
+      required: false
