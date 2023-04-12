@@ -1,6 +1,12 @@
+import { debug, getInput } from '@actions/core'
+
 const getSectionValue = (oneLineBody: string, title: string) => {
   const sectionTitle = `### ${title}`
+  console.log(sectionTitle)
   const index = oneLineBody.lastIndexOf(sectionTitle)
+  console.log(index)
+  debug(`${index}`)
+  console.log(oneLineBody)
   if (index < 0) {
     return null
   }
