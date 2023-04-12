@@ -1,21 +1,22 @@
+import getSectionValue from './getSectionValue'
+
 const DEFAULT_LABELS = ['Issue Triaged']
-const SEVERITY = '### Severity'
-const SCALE = '### Scale'
+const SEVERITY = 'Severity'
+const SCALE = 'Scale'
 
-const getSSS = (body: string) => {
-  const oneLine = body.replace(/(\r\n|\n|\r)/gm, '')
-  const severityIndex = oneLine.lastIndexOf(SEVERITY) + SEVERITY.length
-  const severity = oneLine.substring(severityIndex, severityIndex + 2)
-  const scaleIndex = oneLine.lastIndexOf(SCALE) + SCALE.length
-  const scale = oneLine.substring(scaleIndex, scaleIndex + 2)
+const getLabelsToAdd = (oneLineBody: string) => {
+  const labels = [...DEFAULT_LABELS]
+  
+  const severity = getSectionValue(oneLineBody, SEVERITY)
+  if (severity) {
+    labels.push(severity)
+  }
 
-  return [
-    severity,
-    scale,
-  ].filter((item) => !!item)
-}
-const getLabelsToAdd = (body: string) => {
-  const labels = [...DEFAULT_LABELS, ...getSSS(body)]
+  const scale = getSectionValue(oneLineBody, SCALE)
+  if (scale) {
+    labels.push(scale)
+  }
+  
   return labels
 }
 
