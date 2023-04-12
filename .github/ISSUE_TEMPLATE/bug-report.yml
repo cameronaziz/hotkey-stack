@@ -13,6 +13,42 @@ body:
         ...
     validations:
       required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Team
+      description: What team(s) should be notified of this issue?
+      multiple: true
+      options:
+        - Apps Eng
+        - Data Eng
+    validations:
+      required: false
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: What is the severity is this issue? How impactful is it? Remember, this IS NOT the scale of the issue.
+      options:
+        - I0
+        - I1
+        - I2
+        - I3
+        - I4
+    validations:
+      required: true
+  - type: dropdown
+    id: scale
+    attributes:
+      label: Scale
+      description: What is the scale of this issue? How much work will it take to resolve? Remember, this IS NOT the severity of the issue.
+      options:
+        - W0
+        - W1
+        - W2
+        - W3
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: |
@@ -37,40 +73,3 @@ body:
         | W1 | Resolution will likely require an engineer's full attention for an entire sprint to resolve. Leadership will be **immediately notified** upon issue creation. |  |
         | W2 | Resolution will likely require less than a day to resolve. | |
         | W3 | Resolution will likely require little to no lines of changes. | |
-  - type: dropdown
-    id: severity
-    attributes:
-      label: Severity
-      description: What is the severity is this issue? How impactful is it? Remember, this IS NOT the scale of the issue.
-      options:
-        - I0
-        - I1
-        - I2
-        - I3
-        - I4
-  - type: dropdown
-    id: scale
-    attributes:
-      label: Scale
-      description: What is the scale of this issue? How much work will it take to resolve? Remember, this IS NOT the severity of the issue.
-      options:
-        - W0
-        - W1
-        - W2
-        - W3
-  - type: dropdown
-    id: workarounds
-    attributes:
-      label: Available workarounds?
-      options:
-        - No and the platform is unusable
-        - No but the platform is still usable
-        - Yes, difficult to implement
-        - Yes, easy to implement
-  - type: textarea
-    id: workarounds-detail
-    attributes:
-      label: Workaround details
-      description: If you are aware of a workaround, please describe it below.
-      placeholder: |
-        e.g. There is an alternative way to access this setting in the sidebar, but it's not readily apparent.
