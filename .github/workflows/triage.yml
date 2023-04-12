@@ -25,7 +25,7 @@ jobs:
 
      - name: Build Action
        run: |
-          npm install && npm run build
+          yarn && yarn build
        working-directory: ./.github/actions/triage/
 
      - name: Run action
