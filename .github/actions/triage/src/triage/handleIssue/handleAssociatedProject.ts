@@ -14,14 +14,19 @@ const split = (associatedProject: string | string[]) => {
         if (project.includes(split)) {
           return project
             .split(split)
-            .map((item) => item.trim().replace('#', ''))
+            .map((item) => item.trim())
 
         }
-        return project.trim().replace('#', '')
+        return project.trim()
       })
       .filter((item): item is string => !!item)
   )
+
+  
+  
 }
+
+const onlyUnique = <T>(value:T, index: number, array: T[]) => array.indexOf(value) === index
 
 const parseProject = (associatedProject: string | null) => {
   if (associatedProject === null) {
@@ -29,7 +34,18 @@ const parseProject = (associatedProject: string | null) => {
   }
   // Split by `:` `;` `-` and `:`.
   
-  return split(associatedProject.trim())
+  return split(associatedProject.trim()).filter(onlyUnique)
+}
+
+const addProject = (issueNumber: number, currentValue: string | null) => {
+  if (!currentValue) {
+    return `#${issueNumber}`
+  }
+
+  const currentProjects = parseProject(currentValue)
+  const current = currentProjects.length === 0 ? '' : currentProjects.join(', ')
+  return `#${issueNumber}, ${current}`
+  
 }
 
 const createChildIssue = (issue: number) => `### ${CHILD_ISSUES}\n\n#${issue}`
@@ -37,8 +53,7 @@ const createChildIssue = (issue: number) => `### ${CHILD_ISSUES}\n\n#${issue}`
 const getNextBody = (currentBody: string, issueNumber: number) => {
   const sectionTitle = `### ${CHILD_ISSUES}`
   const oneLineBody = oneLine(currentBody)
-  const current = getSectionValue(oneLineBody, CHILD_ISSUES)
-  console.log(current)
+  const currentValue = getSectionValue(oneLineBody, CHILD_ISSUES)
 
   
   if (currentBody.includes(sectionTitle)) {
@@ -46,12 +61,10 @@ const getNextBody = (currentBody: string, issueNumber: number) => {
     const sectionStartIndex = index + sectionTitle.length
     const remainingText = currentBody.substring(sectionStartIndex)
     const nextSectionIndex = remainingText.indexOf('###')
-    const projects = parseProject(current)
+    const projects = addProject(issueNumber, currentValue)
     console.log(projects)
-    projects.push(`#${issueNumber}`)
-    const result = projects.join(', ')
     const remaining = nextSectionIndex < 0 ? '' : remainingText.substring(nextSectionIndex)
-    return `${currentBody.substring(0, sectionStartIndex)}\n${result}${remaining}`
+    return `${currentBody.substring(0, sectionStartIndex)}\n${projects}${remaining}`
   }
   
   return `${currentBody}\n\n${createChildIssue(issueNumber)}}`
