@@ -37,6 +37,8 @@ const handleIssue = async () => {
   const { owner, name } = repository
   const { number, body } = issue
   const labels = getLabelsToAdd(body)
+
+  debug(body)
   
   const labelsText = labels.map((label) => `"${label}"`).join(', ')
   debug(`Adding the following labels to issue #${number}: ${labelsText}`)
