@@ -3,6 +3,7 @@ import { context, getOctokit } from '@actions/github'
 import getSectionValue from './getSectionValue'
 
 const ASSOCIATED_PROJECT = 'Associated Project'
+const CHILD_ISSUES = 'Child Issues'
 
 const split = (associatedProject: string | string[], splitter: string | string[]) => {
   const projects = Array.isArray(associatedProject) ? associatedProject : [associatedProject]
@@ -14,7 +15,7 @@ const split = (associatedProject: string | string[], splitter: string | string[]
           return project
             .split(splitBy)
             .map((item) => item.trim().replace('#', ''))
-            
+
         }
         return null
       })
@@ -31,7 +32,25 @@ const parseProject = (associatedProject: string | null) => {
   return split(associatedProject.trim(), splits)
 }
 
-console.log(parseProject(' #12, #123'))
+const createChildIssue = (issue: string) => `### ${CHILD_ISSUES}\n\n${issue}`
+
+const getNextBody = (currentBody: string, issue: string) => {
+  const sectionTitle = `### ${CHILD_ISSUES}`
+
+  const result = `\n\n${createChildIssue(issue)}`
+
+  if (currentBody.includes(sectionTitle)) {
+    const index = currentBody.lastIndexOf(sectionTitle)
+    const sectionStartIndex = index + sectionTitle.length
+    const remainingText = currentBody.substring(sectionStartIndex)
+    const nextSectionIndex = remainingText.indexOf('###')
+    return `${currentBody.substring(0, sectionStartIndex)}${result}${currentBody.substring(nextSectionIndex)}`
+  }
+
+  return `${currentBody}${result}`
+
+
+}
 
 const handleAssociatedProject = async (oneLineBody: string) => {
   const { repository } = context.payload
@@ -40,7 +59,7 @@ const handleAssociatedProject = async (oneLineBody: string) => {
   if (!repository) {
     return
   }
-  
+
   const associatedProject = getSectionValue(oneLineBody, ASSOCIATED_PROJECT)
   const projects = parseProject(associatedProject)
 
@@ -60,8 +79,13 @@ const handleAssociatedProject = async (oneLineBody: string) => {
         repo: name
       })
       const currentBody = other.data.body || ''
-  
-      console.log(currentBody)
+      const nextBody = getNextBody(currentBody, project)
+      await octokit.rest.issues.update({
+        owner: owner.login,
+        issue_number,
+        repo: name,
+        body: nextBody,
+      })
 
     } catch {
       debug(`Issue ${issue_number} was not found.`)
