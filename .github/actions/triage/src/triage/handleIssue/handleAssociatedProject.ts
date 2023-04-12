@@ -32,7 +32,7 @@ const parseProject = (associatedProject: string | null) => {
   return split(associatedProject.trim(), splits)
 }
 
-const createChildIssue = (issue: string) => `### ${CHILD_ISSUES}\n\n${issue}`
+const createChildIssue = (issue: string) => `### ${CHILD_ISSUES}\n\n#${issue}`
 
 const getNextBody = (currentBody: string, issue: string) => {
   const sectionTitle = `### ${CHILD_ISSUES}`
