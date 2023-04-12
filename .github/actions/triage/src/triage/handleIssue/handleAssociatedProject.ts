@@ -32,9 +32,9 @@ const parseProject = (associatedProject: string | null) => {
   return split(associatedProject.trim(), splits)
 }
 
-const createChildIssue = (issue: string) => `### ${CHILD_ISSUES}\n\n#${issue}`
+const createChildIssue = (issue: number) => `### ${CHILD_ISSUES}\n\n#${issue}`
 
-const getNextBody = (currentBody: string, issue: string) => {
+const getNextBody = (currentBody: string, issueNumber: number) => {
   const sectionTitle = `### ${CHILD_ISSUES}`
   const oneLineBody = oneLine(currentBody)
   const current = getSectionValue(oneLineBody, CHILD_ISSUES)
@@ -46,18 +46,18 @@ const getNextBody = (currentBody: string, issue: string) => {
     const remainingText = currentBody.substring(sectionStartIndex)
     const nextSectionIndex = remainingText.indexOf('###')
     const projects = parseProject(current)
-    projects.push(`#${issue}`)
+    projects.push(`#${issueNumber}`)
     const result = projects.join(', ')
     const remaining = nextSectionIndex < 0 ? '' : remainingText.substring(nextSectionIndex)
-    return `${currentBody.substring(0, sectionStartIndex)}${result}${remaining}`
+    return `${currentBody.substring(0, sectionStartIndex)}\n${result}${remaining}`
   }
   
-  return `${currentBody}\n\n${createChildIssue(issue)}}`
+  return `${currentBody}\n\n${createChildIssue(issueNumber)}}`
 
 
 }
 
-const handleAssociatedProject = async (oneLineBody: string) => {
+const handleAssociatedProject = async (oneLineBody: string, issueNumber: number) => {
   const { repository } = context.payload
 
   const githubToken = getInput('github_token')
@@ -84,7 +84,7 @@ const handleAssociatedProject = async (oneLineBody: string) => {
         repo: name
       })
       const currentBody = other.data.body || ''
-      const nextBody = getNextBody(currentBody, project)
+      const nextBody = getNextBody(currentBody, issueNumber)
       await octokit.rest.issues.update({
         owner: owner.login,
         issue_number,

@@ -41,7 +41,7 @@ const handleIssue = async () => {
   const { number, body } = issue
   const oneLineBody = oneLine(body)
   const labels = getLabelsToAdd(oneLineBody)
-  handleAssociatedProject(oneLineBody)
+  handleAssociatedProject(oneLineBody, issue.number)
   
   const labelsText = labels.map((label) => `"${label}"`).join(', ')
   debug(`Adding the following labels to issue #${number}: ${labelsText}`)
