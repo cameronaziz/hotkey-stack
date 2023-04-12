@@ -53,13 +53,20 @@ const handleAssociatedProject = async (oneLineBody: string) => {
   console.log('projects', console.log(projects))
   projects.forEach(async (project) => {
     const issue_number = parseInt(project)
-    const other = await octokit.rest.issues.get({
-      owner: owner.login,
-      issue_number,
-      repo: name
-    })
+    try {
+      const other = await octokit.rest.issues.get({
+        owner: owner.login,
+        issue_number,
+        repo: name
+      })
+      const currentBody = other.data.body || ''
+  
+      console.log(currentBody)
 
-    console.log(other.data.body || 'no body')
+    } catch {
+      debug(`Issue ${issue_number} was not found.`)
+    }
+
   })
 
 }
