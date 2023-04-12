@@ -5,12 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "ncc build src/index.js -o dist --source-map",
+		"build": "ncc build js/index.js -o dist --source-map",
 		"transpile": "tsc"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/jeherve/test-actions.git"
 	},
 	"keywords": [
 		"github",
