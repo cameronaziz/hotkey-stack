@@ -1,9 +1,9 @@
 import { debug, getInput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
-import { WebhookPayload } from 'types'
+import Project from '../../typings/Project'
 import getLabelsToAdd from './getLabelsToAdd'
 
-const logIssue = (payload: WebhookPayload, githubToken: string) => {
+const logIssue = (payload: Project.WebhookPayload, githubToken: string) => {
   const { issue, repository } = payload
   if (!issue) {
     debug('No Issue in context')

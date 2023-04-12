@@ -1,5 +1,3 @@
-import definePriority from './defineProperty'
-
 const DEFAULT_LABELS = ['Issue Triaged']
 const SEVERITY = '### Severity'
 const SCALE = '### Scale'

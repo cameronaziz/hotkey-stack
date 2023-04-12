@@ -1,9 +1,9 @@
-import { debug, } from '@actions/core';
-import { ProjectField, SelectField, SetStatusMutation } from '../../api';
-import { Github, ProjectInfo } from '../../types';
+import { debug } from '@actions/core'
+import API from '../../typings/GithubAPI'
+import Project from '../../typings/Project'
 
-const isSelectField = (field: ProjectField): field is SelectField =>
-	Array.isArray((field as SelectField).options)
+const isSelectField = (field: {}): field is API.SelectField =>
+	Array.isArray((field as API.SelectField).options)
 
 /**
  * Set custom fields for a project item.
@@ -14,11 +14,11 @@ const isSelectField = (field: ProjectField): field is SelectField =>
  * @param {string} statusText    - Status of our PR (must match an existing column in the project board).
  * @returns {Promise<string>} - The new project item id.
  */
-const setPriorityField = async (octokit: Github, projectInfo: ProjectInfo, projectItemId: string, statusText: string): Promise<string> => {
+const setPriorityField = async (octokit: Project.Github, projectInfo: Project.ProjectInfo, projectItemId: string, statusText: string): Promise<string> => {
 	const {
 		projectNodeId, // Project board node ID.
 		status,
-	} = projectInfo;
+	} = projectInfo
 
 	if (!status || !isSelectField(status)) {
 		return ''
@@ -29,15 +29,15 @@ const setPriorityField = async (octokit: Github, projectInfo: ProjectInfo, proje
 	} = status
 
 	// Find the ID of the status option that matches our PR status.
-	const statusOptionId = options.find(option => option.name === statusText)?.id;
+	const statusOptionId = options.find(option => option.name === statusText)?.id
 	if (!statusOptionId) {
 		debug(
 			`Triage: Status ${ statusText } does not exist as a colunm option in the project board.`
-		);
-		return '';
+		)
+		return ''
 	}
 
-	const projectNewItemDetails = await octokit.graphql<SetStatusMutation>(
+	const projectNewItemDetails = await octokit.graphql<API.SetStatusMutation>(
 		`mutation ( $input: UpdateProjectV2ItemFieldValueInput! ) {
 			set_status: updateProjectV2ItemFieldValue( input: $input ) {
 				projectV2Item {
@@ -55,18 +55,18 @@ const setPriorityField = async (octokit: Github, projectInfo: ProjectInfo, proje
 				},
 			},
 		}
-	);
+	)
 
-	const newProjectItemId = projectNewItemDetails.set_status.projectV2Item.id;
+	const newProjectItemId = projectNewItemDetails.set_status.projectV2Item.id
 
 	if (!newProjectItemId) {
-		debug( `Triage: Failed to set the "${ statusText }" status for this project item.` );
-		return '';
+		debug( `Triage: Failed to set the "${ statusText }" status for this project item.` )
+		return ''
 	}
 
-	debug( `Triage: Project item ${ newProjectItemId } was moved to "${ statusText }" status.` );
+	debug( `Triage: Project item ${ newProjectItemId } was moved to "${ statusText }" status.` )
 
-	return newProjectItemId; // New Project item ID (what we just edited). String.
+	return newProjectItemId // New Project item ID (what we just edited). String.
 }
 
 export default setPriorityField
