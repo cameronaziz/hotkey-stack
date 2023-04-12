@@ -50,7 +50,7 @@ const handleAssociatedProject = async (oneLineBody: string) => {
 
   const { owner, name } = repository
   const octokit = getOctokit(githubToken)
-  console.log('projects', console.log)
+  console.log('projects', console.log(projects))
   projects.forEach(async (project) => {
     const issue_number = parseInt(project)
     const other = await octokit.rest.issues.get({
