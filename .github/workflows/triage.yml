@@ -1,7 +1,7 @@
 name: Triage
 on:
   issues: # For auto-triage of issues.
-    types: [opened]
+    types: [opened, reopened]
   pull_request_target: # For triaging PRs into project boards.
     types: [opened,converted_to_draft,ready_for_review]
 
