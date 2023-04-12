@@ -24,6 +24,21 @@ const logIssue = (payload: WebhookPayload, githubToken: string) => {
 
   debug('Handle Issue Setup Failed')
 }
+const SEVERITY = '### Severity'
+const SCALE = '### Scale'
+
+const getSSS = (body: string) => {
+  const oneLine = body.replace(/(\r\n|\n|\r)/gm, '')
+  const severityIndex = oneLine.lastIndexOf(SEVERITY) + SEVERITY.length
+  const severity = oneLine.substring(severityIndex, severityIndex + 2)
+  const scaleIndex = oneLine.lastIndexOf(SCALE) + SCALE.length
+  const scale = oneLine.substring(scaleIndex, scaleIndex + 2)
+
+  return {
+    severity,
+    scale,
+  }
+}
 
 const handleIssue = async () => {
   const githubToken = getInput('github_token')
@@ -38,7 +53,10 @@ const handleIssue = async () => {
   const { number, body } = issue
   const labels = getLabelsToAdd(body)
 
-  debug(body)
+  const { severity, scale } = getSSS(body)
+
+  debug(severity)
+  debug(scale)
   
   const labelsText = labels.map((label) => `"${label}"`).join(', ')
   debug(`Adding the following labels to issue #${number}: ${labelsText}`)
