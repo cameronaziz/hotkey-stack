@@ -1,12 +1,15 @@
-import { debug, getInput, setFailed } from '@actions/core';
+import { getInput, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import definePriority from './defineProperty';
+import { debug } from './log';
 import triagePrToProject from './triagePRToProject';
 
-(async function main() {
-	debug('Our action is running');
 
-	const token = getInput('github_token');
+(async function main() {
+	const github_token: string = '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';
+	debug('Our action is running', true);
+
+	const token = github_token
 	if (!token) {
 		setFailed('Input `github_token` is required');
 		return;
@@ -18,10 +21,10 @@ import triagePrToProject from './triagePRToProject';
 	// Get info about the event.
 	const { payload, eventName } = context;
 
-	debug(`Received event = '${ eventName }', action = '${ payload.action }'`);
+	debug(`Received event = '${eventName}', action = '${payload.action}'`, true);
 
 	// Let's monitor changes to Pull Requests.
-	const projectToken = getInput('triage_projects_token');
+	const projectToken = github_token
 
 	if (eventName === 'pull_request_target' && projectToken !== '') {
 		debug(`Triage: now processing a change to a Pull Request`);
@@ -33,7 +36,7 @@ import triagePrToProject from './triagePRToProject';
 	}
 
 	// We only want to proceed if this is a newly opened issue.
-	if (eventName === 'issues' && payload.action === 'opened') {
+	if (eventName === 'issues') {
 		// Extra data from the event, to use in API requests.
 		const { issue, repository } = payload;
 
