@@ -25,26 +25,6 @@ const logIssue = (payload: Project.WebhookPayload, githubToken: string) => {
 
   debug('Handle Issue Setup Failed')
 }
-const body = `### Clear and Concise Description
-
-lets make it
-
-### Team
-
-_No response_
-
-### Associated Project
-
-#13`
-
-const run = () => {
-  const oneLineBody = body.replace(/(\r\n|\n|\r)/gm, '')
-  const labels = getLabelsToAdd(oneLineBody)
-  handleAssociatedProject(oneLineBody)
-}
-
-run()
-
 
 const handleIssue = async () => {
   const githubToken = getInput('github_token')

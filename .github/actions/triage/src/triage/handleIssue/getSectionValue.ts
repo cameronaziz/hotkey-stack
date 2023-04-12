@@ -2,7 +2,7 @@ const getSectionValue = (oneLineBody: string, title: string) => {
   const sectionTitle = `### ${title}`
   const index = oneLineBody.lastIndexOf(sectionTitle)
   if (index < 0) {
-    return ''
+    return null
   }
   const sectionStartIndex = index + sectionTitle.length
   const remainingText = oneLineBody.substring(sectionStartIndex)
