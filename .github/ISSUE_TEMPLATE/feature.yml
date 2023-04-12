@@ -24,6 +24,6 @@ body:
     attributes:
       label: Associated Project
       description: Is there an issue that this should be associated with?
-      placeholder: #1234
+      placeholder: "#1234"
     validations:
       required: false
