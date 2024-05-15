@@ -1,6 +1,6 @@
 {
   "name": "hotkey-stack",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Hotkey Event Listener Stacks",
   "main": "dist/index.js",
   "types": "typings.d.ts",

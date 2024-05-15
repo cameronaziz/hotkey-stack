@@ -11,15 +11,15 @@ class Hotkey {
         this.symbolTrash = new Map();
     }
     findListener = () => {
-        let index = this.items.length || -1;
+        let index = this.items.length;
         while (index > -1) {
             index -= 1;
-            const stackItem = this.items[index];
-            if (!stackItem.onHold) {
+            const stackItem = this.items.at(index);
+            if (stackItem && !stackItem.onHold) {
                 break;
             }
         }
-        return this.items[index]?.listener || null;
+        return this.items.at(index)?.listener ?? null;
     };
     add = (item) => {
         this.items.push(item);
